@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!-- ===========================================================
+         SERVERS
+         Onde você coloca credenciais (Nexus privado, GitHub Packages…)
+         Para uso genérico deixo vazio.
+         =========================================================== -->
+    <servers>
+        <!-- Exemplo de servidor privado (descomentando quando necessário)
+        <server>
+            <id>meu-nexus</id>
+            <username>${env.NEXUS_USER}</username>
+            <password>${env.NEXUS_PASS}</password>
+        </server>
+        -->
+    </servers>
+
+    <!-- ===========================================================
+         MIRRORS
+         Para acelerar builds usando o mirror do Maven Central via HTTPS.
+         Opcional, mas recomendado.
+         =========================================================== -->
+    <mirrors>
+        <mirror>
+            <id>central-https</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Central via HTTPS</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </mirror>
+    </mirrors>
+
+    <!-- ===========================================================
+         PROFILES
+         Perfis genéricos, com repositórios padrão do Maven.
+         =========================================================== -->
+    <profiles>
+
+        <profile>
+            <id>default-profile</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <name>Maven Central</name>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </repository>
+
+                <!-- Repositório para SNAPSHOTS, se necessário -->
+                <repository>
+                    <id>snapshots</id>
+                    <name>Snapshot Repository</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <releases><enabled>false</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </pluginRepository>
+
+                <pluginRepository>
+                    <id>snapshots</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <releases><enabled>false</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+
+    </profiles>
+
+    <!-- ===========================================================
+         PROXY (se precisar usar empresa)
+         =========================================================== -->
+    <!--
+    <proxies>
+        <proxy>
+            <id>corp-proxy</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>proxy.empresa.com</host>
+            <port>8080</port>
+            <username>${env.PROXY_USER}</username>
+            <password>${env.PROXY_PASS}</password>
+            <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
+        </proxy>
+    </proxies>
+    -->
+
+</settings>
