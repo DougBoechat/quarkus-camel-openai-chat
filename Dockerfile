@@ -13,16 +13,16 @@ COPY src ./src
 # Build da aplicação
 RUN mvn clean package -DskipTests -B
 
+# Verificar estrutura do build (debug)
+RUN ls -la target/quarkus-app/
+
 # Stage 2: Runtime
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Copiar apenas os arquivos necessários do build
-COPY --from=build /app/target/quarkus-app/lib/ /app/lib/
-COPY --from=build /app/target/quarkus-app/*.jar /app/
-COPY --from=build /app/target/quarkus-app/app/ /app/app/
-COPY --from=build /app/target/quarkus-app/quarkus/ /app/quarkus/
+# Copiar TODA a pasta quarkus-app de uma vez
+COPY --from=build /app/target/quarkus-app/ /app/
 
 # Variáveis de ambiente
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
@@ -31,4 +31,4 @@ ENV JAVA_OPTS="-Xmx512m -Xms256m"
 EXPOSE 8080
 
 # Comando para iniciar
-CMD ["java", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.http.port=${PORT:-8080}", "-jar", "quarkus-run.jar"]
+CMD ["sh", "-c", "java $JAVA_OPTS -Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=${PORT:-8080} -jar quarkus-run.jar"]
