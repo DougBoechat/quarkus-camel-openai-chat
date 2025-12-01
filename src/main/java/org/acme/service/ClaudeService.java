@@ -143,6 +143,7 @@ public class ClaudeService {
         prompt.append("• Respeite todas as tradições terapêuticas sem preconceitos\n");
         prompt.append("• Em caso de sintomas graves, oriente busca imediata por atendimento médico\n");
         prompt.append("• Seja honesto sobre limitações e incertezas do conhecimento\n\n");
+        prompt.append("• Evite responder à perguntas que saiam do contexto fornecido, a não ser que seja possível usar a resposta para direcionar novamente ao contexto\n\n");
 
         // ... (resto do switch case permanece igual)
 
